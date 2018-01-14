@@ -1,0 +1,15 @@
+{
+    "name": "upwind24/php-upwind24",
+    "description": "PHP wrapper for Upwind24 WebAPI",
+    "license": "MIT",
+    "require": {
+        "guzzlehttp/guzzle": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {"Upwind24\\": "src/"}
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "2.*",
+        "phing/phing": "^2.14"
+    }
+}
