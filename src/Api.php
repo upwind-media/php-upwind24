@@ -24,6 +24,7 @@
 namespace Upwind24;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 
@@ -159,11 +160,15 @@ class Api
         $headers['Content-Type'] = 'application/json; charset=utf-8';
         if ($authentication) {
             $headers['X-Upw24-Client'] = $this->clientId;
-            $sign = sha1($this->clientId.'+'.$this->secretId.'+'.$method.'+/'.trim(strtolower($url), '/'));
+            $sign = sha1($this->clientId.'+'.$this->secretId.'+'.$method.'+/'.trim(strtolower($path), '/'));
             $headers['X-Upw24-Signature'] = $sign;
         }
 
-        return $this->httpClient->send($request, ['headers' => $headers]);
+        try {
+            return $this->httpClient->send($request, ['headers' => $headers]);
+        } catch (ClientException $e) {
+            return $e->getResponse();
+        }
     }
 
     /**
