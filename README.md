@@ -40,4 +40,4 @@ Do you want to use Upwind24 WebAPI? Let's start with [example part](examples/REA
 How I can get my API credentials?
 ------------
 
-New Upwind24 WebAPI credential keys can be generated in the [user panel](http://www.upwind24.com/panel/api-access).
+New Upwind24 WebAPI credential keys can be generated in the [user panel](https://www.upwind24.pl/panel/integration).

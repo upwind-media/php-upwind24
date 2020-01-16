@@ -6,7 +6,7 @@ Below you can find real use cases of the Upwind24 PHP Wrapper.
 ```php
 <?php
 /**
- * Get your API credentials at http://www.upwind24.com/panel/api-access
+ * Get your API credentials at https://www.upwind24.pl/panel/integration
  */
 require __DIR__ . '/vendor/autoload.php';
 use \Upwind24\Api;
@@ -27,7 +27,7 @@ var_dump(
 ```php
 <?php
 /**
- * Get your API credentials at http://www.upwind24.com/panel/api-access
+ * Get your API credentials at https://www.upwind24.pl/panel/integration
  */
 require __DIR__ . '/vendor/autoload.php';
 use \Upwind24\Api;
