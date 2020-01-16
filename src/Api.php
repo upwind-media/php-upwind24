@@ -1,7 +1,7 @@
 <?php
 # MIT License
 #
-# Copyright (c) 2018 Upwind24
+# Copyright (c) 2020 Upwind24
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,12 @@ class Api
     /**
      * Default WebAPI endpoint URL.
      */
-    const DEFAULT_ENDPOINT = 'http://api.upwind24.com';
+    const DEFAULT_ENDPOINT = 'http://dev-api.upwind24.com';
+
+    /**
+     * Default WebAPI version.
+     */
+    const DEFAULT_VERSION = 'v1.0';
 
     /**
      * Contain selected API endpoint
@@ -47,6 +52,13 @@ class Api
      * @var string
      */
     protected $endpoint;
+
+    /**
+     * Contain selected API version
+     *
+     * @var string
+     */
+    protected $version;
 
     /**
      * Contain key with client identifier.
@@ -75,6 +87,7 @@ class Api
      * @param $clientId                 User's API identifier.
      * @param $secretId                 User's API secret identifier.
      * @param string $endpoint          URL of the API endpoint.
+     * @param string $version           API version.
      * @param Client|null $httpClient   Instance of existing HTTP client.
      *
      * @throws Exception\InvalidParameterException
@@ -82,6 +95,7 @@ class Api
     public function __construct(
         $clientId,
         $secretId,
+        $version = self::DEFAULT_VERSION,
         $endpoint = self::DEFAULT_ENDPOINT,
         Client $httpClient = null
     ) {
@@ -102,6 +116,7 @@ class Api
 
         $this->clientId = $clientId;
         $this->secretId = $secretId;
+        $this->version = $version;
         $this->endpoint = $endpoint;
         $this->httpClient = $httpClient;
     }
@@ -117,11 +132,11 @@ class Api
      *
      * @return ResponseInterface
      *
-     * @throws \GuzzleHttp\Exception\ClientException
+     * @throws ClientException
      */
     protected function rawCall($method, $path, $content = null, $authentication = true, $headers = [])
     {
-        $url = rtrim($this->endpoint, '/').'/'.ltrim($path, '/');
+        $url = rtrim($this->endpoint, '/') . '/' . trim($this->version, '/') . '/' . ltrim($path, '/');
         $method = strtoupper($method);
 
         $request = new Request($method, $url);
@@ -159,9 +174,9 @@ class Api
 
         $headers['Content-Type'] = 'application/json; charset=utf-8';
         if ($authentication) {
-            $headers['X-Upw24-Client'] = $this->clientId;
+            $headers['X-U24-Client'] = $this->clientId;
             $sign = sha1($this->clientId.'+'.$this->secretId.'+'.$method.'+/'.trim(strtolower($path), '/'));
-            $headers['X-Upw24-Signature'] = $sign;
+            $headers['X-U24-Signature'] = $sign;
         }
 
         try {
@@ -191,7 +206,7 @@ class Api
      * @param array  $headers List of additional request headers
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\ClientException if http request is an error
+     * @throws ClientException if http request is an error
      */
     public function get($path, $content = null, $headers = [])
     {
@@ -208,7 +223,7 @@ class Api
      * @param array  $headers List of additional request headers
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\ClientException if http request is an error
+     * @throws ClientException if http request is an error
      */
     public function post($path, $content = null, $headers = [])
     {
@@ -225,7 +240,7 @@ class Api
      * @param array  $headers List of additional request headers
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\ClientException if http request is an error
+     * @throws ClientException if http request is an error
      */
     public function put($path, $content, $headers = [])
     {
@@ -242,7 +257,7 @@ class Api
      * @param array  $headers List of additional request headers
      *
      * @return array
-     * @throws \GuzzleHttp\Exception\ClientException if http request is an error
+     * @throws ClientException if http request is an error
      */
     public function delete($path, $content = null, $headers = [])
     {

@@ -3,7 +3,8 @@
     "description": "PHP wrapper for Upwind24 WebAPI",
     "license": "MIT",
     "require": {
-        "guzzlehttp/guzzle": "^6.0"
+        "guzzlehttp/guzzle": "^6.0",
+         "ext-json": "*"
     },
     "autoload": {
         "psr-4": {"Upwind24\\": "src/"}
