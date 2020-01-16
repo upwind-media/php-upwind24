@@ -39,7 +39,7 @@ class Api
     /**
      * Default WebAPI endpoint URL.
      */
-    const DEFAULT_ENDPOINT = 'http://dev-api.upwind24.com';
+    const DEFAULT_ENDPOINT = 'https://api.upwind24.pl';
 
     /**
      * Default WebAPI version.
